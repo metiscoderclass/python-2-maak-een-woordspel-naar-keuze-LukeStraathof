@@ -1,9 +1,6 @@
 import random
 
-aantal_letters_geraden = 0
-aantal_letters_totaal = 0
-woorden = ["leeftijd", "appel", "ontvoeren", "januari", "blind", "miljoen", "gedicht", "granen", "senaat", "ceremonie", "wrat", "vleugel", "walvis", "linkshandige", "fan", "helikopter", "ober", "voorvader", "octopus", "wrijven"]
-
+woorden = ["aankleden", "fles", "bedekt", "infectie", "schrijfmachine", "grafheuvel", "zuiver", "stadion", "oorbeschermer", "vaas", "leeftijd", "appel", "ontvoeren", "januari", "blind", "miljoen", "gedicht", "granen", "senaat", "ceremonie", "wrat", "vleugel", "walvis", "linkshandige", "fan", "helikopter", "ober", "voorvader", "octopus", "wrijven"]
 def woordlijststreepjes(geradenletters, woord):
   resultaat = ""
 
@@ -27,78 +24,75 @@ def naamvragen():
 
 def lettercheck():
   woord = random.choice(woorden)
-  aantal_letters_totaal = len(woord)
   aantal_slecht = 0
   doorgaan = True
   geradenletters = []
   
   while doorgaan:
-    letter = input("Kies een letter of kies ? om het geheime woord te raden: ")
+    letter = input("Kies een letter of kies ? om het geheime woord te raden: ").lower()
+    alphabetcheck = letter.isalpha()
+    if alphabetcheck == True:
+      if len(letter) != 1:
+        print("dit mag niet, probeer het maar opnieuw.")
+      elif letter in geradenletters:
+        print("Dit heb je al geraden, probeer het maar opnieuw.")
+      else:
+        geradenletters.append(letter)
 
-    if len(letter) != 1:
-      print("dit mag niet, probeer het maar opnieuw.")
-    elif letter == "?":
-      raad_woord = input("Raad het geheime woord: ")
-      if raad_woord == woord:
-        print("Je hebt het goed, het woord was", woord + ".")
-        if input("Wil je opnieuw spelen? ")  == "ja":
-          aantal_slecht = 0
-          geradenletters = []
-          woord = random.choice(woorden)
+        if letter in woord:
+          print("Je hebt de volgende letters goed geraden:", woordlijststreepjes(geradenletters, woord))
         else:
-          doorgaan = False
-      else:
-        print("Game over")
-        print("Het juiste woord was:", woord)
-        if input("Wil je opnieuw spelen? ")  == "ja":
-          aantal_slecht = 0
-          geradenletters = []
-          woord = random.choice(woorden)
-        else:
-          doorgaan = False
+          aantal_slecht += 1
+          if aantal_slecht == 1:
+            print("_________")
+            print("|/")
+            print("|")
+            print("|")
+            print("|")
+            print("|")
+            print("|")
+            print("|___")
+          elif aantal_slecht == 2:
+            print("_________")
+            print("|/       |")
+            print("|")
+            print("|")
+            print("|")
+            print("|")
+            print("|")
+            print("|___")
+          elif aantal_slecht == 3:
+            print("_________")
+            print("|/       |")
+            print("|       ( )")
+            print("|")
+            print("|")
+            print("|")
+            print("|")
+            print("|___")
+          elif aantal_slecht == 4:
+            print("_________")
+            print("|/       |")
+            print("|       ( )")
+            print("|       /|\ ")
+            print("|")
+            print("|")
+            print("|")
+            print("|___")
     else:
-      geradenletters.append(letter)
-      
-      if letter in woord:
-        print("Je hebt de volgende letters goed geraden:", woordlijststreepjes(geradenletters, woord))
+      if letter == "?":
+        raad_woord = input("Raad het geheime woord: ").lower()
+        if raad_woord == woord:
+          print("Je hebt het goed, het woord was", woord + ".")
+          if input("Wil je opnieuw spelen? ")  == "ja":
+            aantal_slecht = 0
+            geradenletters = []
+            woord = random.choice(woorden)
+          else:
+            doorgaan = False
       else:
-        aantal_slecht += 1
-        if aantal_slecht == 1:
-          print("_________")
-          print("|/")
-          print("|")
-          print("|")
-          print("|")
-          print("|")
-          print("|")
-          print("|___")
-        elif aantal_slecht == 2:
-          print("_________")
-          print("|/       |")
-          print("|")
-          print("|")
-          print("|")
-          print("|")
-          print("|")
-          print("|___")
-        elif aantal_slecht == 3:
-          print("_________")
-          print("|/       |")
-          print("|       ( )")
-          print("|")
-          print("|")
-          print("|")
-          print("|")
-          print("|___")
-        elif aantal_slecht == 4:
-          print("_________")
-          print("|/       |")
-          print("|       ( )")
-          print("|       /|\ ")
-          print("|")
-          print("|")
-          print("|")
-          print("|___")
+        print("dit mag niet, probeer het maar opnieuw.")
+    geradenletters += letter
     if woordlijststreepjes(geradenletters, woord) == woord:
       print("Je hebt het goed, het woord was", woord + ".")
       if input("Wil je opnieuw spelen? ")  == "ja":
